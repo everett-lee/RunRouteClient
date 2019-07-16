@@ -1,6 +1,7 @@
 import React from 'react';
+import MapDisplay from './map/MapDisplay';
+import Options from './form/Options';
 import axios from 'axios';
-import Options from './form/Options'
 
 class App extends React.Component {
     constructor(props) {
@@ -26,8 +27,13 @@ class App extends React.Component {
 
     render() {
         return (
+        <div>
         <div className="ui container">
             <Options updateQueryRequest={this.updateQueryRequest} />
+            <div className="map-display-div">
+            <MapDisplay />
+            </div>
+        </div>
         </div>
         )
     }
