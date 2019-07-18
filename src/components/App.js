@@ -1,27 +1,31 @@
 import React from 'react';
 import MapDisplay from './map/MapDisplay';
 import Options from './form/Options';
-import axios from 'axios';
+import Modal from './Modal';
 import StartCoordsContainer from './StartCoordsContainer';
+import axios from 'axios';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = { lat: 51.505,
-                        lon: -0.09};
+                        lon: -0.09,
+                        modalActive: false}
     }
 
 
     async sendRequest(query) {
+        this.setState({modalActive: true})
         console.log(query);
 
         const response = await axios
             .get(query);
-        
+    
         const x = response;
         // how to handle errors?
         console.log(x);
+        this.setState({modalActive: false})
     }
 
     // take the user-specified options and return a string
@@ -57,9 +61,10 @@ class App extends React.Component {
         <div>
         <div className="ui container">
             <Options updateQueryRequest={this.updateQueryRequest} />
+            <Modal active={this.state.modalActive}/>
             <div className="map-display-div">
             <MapDisplay lat={this.state.lat} lon={this.state.lon}
-                        updateCoords={this.updateCoords} />
+                        updateCoords={this.updateCoords} />                
             </div>
             <StartCoordsContainer updateCoords={this.updateCoords} />
         </div>

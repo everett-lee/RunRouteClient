@@ -10,3 +10,8 @@
 .leaflet-popup-content-wrapper {
     text-align: center;
 }
+
+.ui.modal {
+    height: 25%;
+    width: 25%;
+}
