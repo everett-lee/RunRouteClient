@@ -1,9 +1,8 @@
 import React from 'react';
 import MapDisplay from './map/MapDisplay';
 import Options from './form/Options';
-import Modal from './Modal';
+import Api from './api/Api';
 import StartCoordsContainer from './StartCoordsContainer';
-import axios from 'axios';
 
 class App extends React.Component {
     constructor(props) {
@@ -11,43 +10,14 @@ class App extends React.Component {
 
         this.state = { lat: 51.505,
                         lon: -0.09,
-                        modalActive: false}
-    }
-
-
-    async sendRequest(query) {
-        this.setState({modalActive: true})
-        console.log(query);
-
-        const response = await axios
-            .get(query);
-    
-        const x = response;
-        // how to handle errors?
-        console.log(x);
-        this.setState({modalActive: false})
-    }
-
-    // take the user-specified options and return a string
-    // matching the API    
-    convertToQuery = (options) => {
-        const avoidedFeaturesBools = Object.values(options.avoidedFeatures)
-        const preferredFeaturesBools = Object.values(options.preferredFeatures)
-        const mainURL = "http://localhost:8080/route/";
-
-        const distanceToMetres = options.distance * 1000;
-
-        const query = mainURL
-        + `coords=(${this.state.lat.toFixed(6)},${this.state.lon.toFixed(6)}),`
-        + `distance=${distanceToMetres},maxGradient=${options.maxGradient},`
-        + `options=${avoidedFeaturesBools + "," + preferredFeaturesBools}`
-    
-        this.sendRequest(query);
+                        queryOptions: null}
     }
 
     // receive input data from the the form in the Options class
-    updateQueryRequest = (options) =>  {
-        this.convertToQuery(options);
+    makeRequest = (options) => {
+        this.setState({queryOptions: options,
+                       lat: this.state.lat,
+                       lon: this.state.lon });
     }
 
     // update the coordinates from a child component
@@ -60,8 +30,9 @@ class App extends React.Component {
         return (
         <div>
         <div className="ui container">
-            <Options updateQueryRequest={this.updateQueryRequest} />
-            <Modal active={this.state.modalActive}/>
+            <Options makeRequest={this.makeRequest} />
+            <Api queryOptions={this.state.queryOptions} 
+                 lat={this.state.lat} lon={this.state.lon} />
             <div className="map-display-div">
             <MapDisplay lat={this.state.lat} lon={this.state.lon}
                         updateCoords={this.updateCoords} />                
