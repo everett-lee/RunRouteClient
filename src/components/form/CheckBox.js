@@ -11,6 +11,4 @@ const OptionsCheckBox = (props) =>
         )
     }
 
-
-
 export default OptionsCheckBox;

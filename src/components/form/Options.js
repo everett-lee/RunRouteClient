@@ -7,11 +7,17 @@ class Options extends React.Component {
         super(props);
         
         const avoidedFeaturesObject =
-         {majorRoads: false, unlit: false, steps: false, concrete: false};
+         {majorRoads: false, 
+          steps: false,
+          concrete: false,
+          unlit: false};
 
         const preferredFeaturesObject =
-         {grassOrDirt: false, residential: false, 
-            lit: false, uphill: false, backroads: false};
+         { uphill: false, 
+           residential: false, 
+           backroads: false, 
+           grassOrDirt: false,
+           };
 
         this.state = { distance: null,
                        maxGradient: 25,
@@ -19,10 +25,12 @@ class Options extends React.Component {
                        preferredFeatures: preferredFeaturesObject};
     }
 
+    // update state on change to slider value
     onSliderInputChange = (event)=> {
         this.setState({ maxGradient: event.target.value });
     }
 
+    // handles clicks for checkbox options
     onAvoidedFeaturesButtonInputChange = (option) =>  {
         const currentBool = this.state.avoidedFeatures[option];
         const avoidedFeaturesObject = this.state.avoidedFeatures;
@@ -33,6 +41,7 @@ class Options extends React.Component {
         this.setState({avoidedFeatures: avoidedFeaturesObject});
     }
 
+    // handles clicks for checkbox options
     onPreferredFeaturesButtonInputChange = (option) =>  {
         const currentBool = this.state.preferredFeatures[option];
         const preferredFeaturesObject = this.state.preferredFeatures;
@@ -71,34 +80,30 @@ class Options extends React.Component {
                                 </div>
                                 <div>
                                     <CheckBox onInputChange={this.onAvoidedFeaturesButtonInputChange} 
-                                    arg = "unlit" label="Unlit areas"/>
-                                </div>
-                                <div>
-                                    <CheckBox onInputChange={this.onAvoidedFeaturesButtonInputChange} 
                                     arg = "steps" label="Steps"/>
                                 </div>
                                 <div>
                                     <CheckBox onInputChange={this.onAvoidedFeaturesButtonInputChange} 
                                     arg = "concrete" label="Concrete"/>
                                 </div>
+                                <div>
+                                    <CheckBox onInputChange={this.onAvoidedFeaturesButtonInputChange} 
+                                    arg = "unlit" label="Unlit streets"/>
+                                </div>
                             </div>
                             <div className="field">
                                 <label>Preferred features</label>
                                 <div>
                                     <CheckBox onInputChange={this.onPreferredFeaturesButtonInputChange} 
-                                            arg="grassOrDirt" label="Grass/dirt suface"/>
+                                            arg="uphill" label="Uphill routes"/>
+                                </div>
+                                <div>
+                                    <CheckBox onInputChange={this.onPreferredFeaturesButtonInputChange} 
+                                            arg="grassOrDirt" label="Grass or dirt sufaces"/>
                                 </div>
                                 <div>
                                     <CheckBox onInputChange={this.onPreferredFeaturesButtonInputChange} 
                                             arg="residential" label="Residential streets"/>
-                                </div>
-                                <div>
-                                    <CheckBox onInputChange={this.onPreferredFeaturesButtonInputChange} 
-                                            arg="lit" label="Lit streets"/>
-                                </div>
-                                <div>
-                                    <CheckBox onInputChange={this.onPreferredFeaturesButtonInputChange} 
-                                            arg="uphill" label="Uphill"/>
                                 </div>
                                 <div>
                                     <CheckBox onInputChange={this.onPreferredFeaturesButtonInputChange} 
