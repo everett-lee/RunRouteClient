@@ -9,15 +9,14 @@ class App extends React.Component {
         super(props);
 
         this.state = { lat: 51.505,
-                        lon: -0.09,
-                        queryOptions: null}
+                        lon: -0.09}
+
+        this.apiRef = React.createRef();
     }
 
     // receive input data from the the form in the Options class
     makeRequest = (options) => {
-        this.setState({queryOptions: options,
-                       lat: this.state.lat,
-                       lon: this.state.lon });
+        this.apiRef.current.convertToQuery(options, this.state.lat, this.state.lon);
     }
 
     // update the coordinates from a child component
@@ -31,8 +30,7 @@ class App extends React.Component {
         <div>
         <div className="ui container">
             <Options makeRequest={this.makeRequest} />
-            <Api queryOptions={this.state.queryOptions} 
-                 lat={this.state.lat} lon={this.state.lon} />
+            <Api ref={this.apiRef} />
             <div className="map-display-div">
             <MapDisplay lat={this.state.lat} lon={this.state.lon}
                         updateCoords={this.updateCoords} />                
