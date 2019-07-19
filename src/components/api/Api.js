@@ -7,25 +7,24 @@ class Api extends React.Component {
               queryOptions: null,
               prevQueryOptions: null, 
               lat: this.props.lat,
-              lon: this.props.lon}
+              lon: this.props.lon,
+              queryExecuted: false}
 
     componentDidUpdate() {
-        const currentQueryOptions = this.state.queryOptions;
-        const newQueryOptions = this.props.queryOptions;
-
-        if (this.state.queryOptions !== this.props.queryOptions
-             || (this.state.lat !== this.props.lat || this.state.lon !== this.props.lon)) {
+        // check that updated state is new
+        if (this.state.queryOptions !== this.props.queryOptions) {
         
             this.setState({ queryOptions: this.props.queryOptions,
                             lat: this.props.lat,
-                            lon:this.props.lon});
+                            lon:this.props.lon,
+                            modalText: "Generating route"});
         }
 
         if (this.state.queryOptions != null &&
                 (this.state.queryOptions !== this.state.prevQueryOptions)) {
                     this.convertToQuery(this.state.prevQueryOptions);
 
-                    this.setState({ prevQueryOptions: this.state.queryOptions });
+                    this.setState({ prevQueryOptions: this.state.queryOptions});
                 }
     }
 
@@ -34,12 +33,17 @@ class Api extends React.Component {
         console.log(query);
 
         const response = await axios
-            .get(query);
+            .get(query)
+            .catch( (error) => this.handleError() );
     
         const x = response;
 
-        console.log(x);
         this.setState({modalActive: false})
+    }
+
+    handleError = () => {
+        this.setState({ modalText: "Failed to generate route" });
+        return new Promise( resolve => setTimeout(resolve, 1000));
     }
 
     // take the user-specified options and return a string
@@ -62,7 +66,7 @@ class Api extends React.Component {
     }
 
     render() {
-        return <Modal active={this.state.modalActive}/>;
+        return <Modal active={this.state.modalActive} text={this.state.modalText}/>;
     }
 }
 

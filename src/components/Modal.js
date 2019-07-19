@@ -7,7 +7,7 @@ const Modal = props => {
         <div className={`ui dimmer modals visibile ${props.active === true? "active": ""}`}>
         <div className={`ui standard modal visible ${props.active === true? "active": ""}`}>
             <div className={`ui inverted dimmer ${props.active === true? "active": ""}`}>
-                 <div className="ui big text loader">Generating route</div>
+                 <div className="ui big text loader">{props.text}</div>
             </div>
         </div>,
         </div>,
