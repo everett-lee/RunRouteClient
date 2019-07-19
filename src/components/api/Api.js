@@ -43,7 +43,7 @@ class Api extends React.Component {
     }
 
     render() {
-        return <Modal active={this.state.modalActive} text={this.state.modalText}/>;
+        return <br/>;
     }
 }
 

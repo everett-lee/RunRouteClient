@@ -13,7 +13,7 @@ class App extends React.Component {
 
         this.apiRef = React.createRef();
     }
-
+    
     // receive input data from the the form in the Options class
     makeRequest = (options) => {
         this.apiRef.current.convertToQuery(options, this.state.lat, this.state.lon);
