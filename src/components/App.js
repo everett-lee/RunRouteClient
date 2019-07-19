@@ -16,7 +16,7 @@ class App extends React.Component {
     
     // receive input data from the the form in the Options class
     makeRequest = (options) => {
-        this.apiRef.current.convertToQuery(options, this.state.lat, this.state.lon);
+        this.apiRef.current.sendRequest(options, this.state.lat, this.state.lon);
     }
 
     // update the coordinates from a child component

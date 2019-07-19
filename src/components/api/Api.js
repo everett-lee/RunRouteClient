@@ -3,9 +3,12 @@ import Modal from '../Modal';
 import axios from 'axios';
 
 class Api extends React.Component {
-    state = { modalActive: false }
+    state = { modalActive: false,
+              modalText: "Generating route"}
 
-    async sendRequest(query) {
+    async sendRequest(options, lat, lon) {
+        const query = this.convertToQuery(options,lat,lon);
+
         this.setState({modalActive: true})
         console.log(query);
 
@@ -15,7 +18,9 @@ class Api extends React.Component {
     
         const x = response;
 
-        this.setState({modalActive: false})
+        console.log(x);
+
+        this.setState({modalActive: false});
     }
 
     handleError = () => {
@@ -30,6 +35,7 @@ class Api extends React.Component {
         const avoidedFeaturesBools = Object.values(options.avoidedFeatures)
         const preferredFeaturesBools = Object.values(options.preferredFeatures)
         const mainURL = "http://localhost:8080/route/";
+        const seperator = avoidedFeaturesBools.length === 0? "": "," 
 
         // convert KM to metres
         const distanceToMetres = options.distance * 1000;
@@ -37,13 +43,13 @@ class Api extends React.Component {
         const query = mainURL
         + `coords=(${lat.toFixed(6)},${lon.toFixed(6)}),`
         + `distance=${distanceToMetres},maxGradient=${options.maxGradient},`
-        + `options=${avoidedFeaturesBools + "," + preferredFeaturesBools}`
-    
-        this.sendRequest(query);
+        + `options=${avoidedFeaturesBools + seperator + preferredFeaturesBools}`
+
+        return query;
     }
 
     render() {
-        return <br/>;
+        return <Modal active={this.state.modalActive} text={this.state.modalText}/>;
     }
 }
 
