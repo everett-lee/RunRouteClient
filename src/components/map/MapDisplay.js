@@ -26,8 +26,8 @@ class MapDisplay extends React.Component {
       if (this.state.prevCoordObj !== this.props.routeCoordsObj) {
 
         const coords = this.props.routeCoordsObj.map( el => Object.keys(el)
-        .filter( key => key !== "id") // remove non lat/lon data
-        .map( key => el[key] )); // map to values
+        .filter( key => key !== "id") // remove the ids
+        .map( key => el[key] )); // map to lat/lon values
 
         this.setState({ prevCoordObj: this.props.routeCoordsObj,
                         routeCoords: coords });
@@ -104,7 +104,7 @@ class MapDisplay extends React.Component {
       </Map>
     )
 
-    if (!this.state.routeCoords) {
+    if (!this.state.routeCoords || !this.props.routeCoordsObj) {
       return preRouteLoad;
     } else {
       return postRouteLoad;

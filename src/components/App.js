@@ -34,7 +34,11 @@ class App extends React.Component {
                          lon: lon });
     }
 
-    // update state in the map component to reset its value
+    // reset routeCoords. Causes map to rerender to default position
+    resetMap = () => {
+        this.setState({ routeCoordsObj: null })
+    }
+
 
     render() {
         return (
