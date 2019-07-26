@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map, Marker, TileLayer, Popup }  from 'react-leaflet';
+import { Map, Marker, TileLayer, Popup, Polyline }  from 'react-leaflet';
 
 class MapDisplay extends React.Component {
   constructor(props) {
@@ -7,18 +7,33 @@ class MapDisplay extends React.Component {
     this.state = {
       lat: this.props.lat,
       lon: this.props.lon,
-      zoom: 13
+      zoom: 13,
+      prevCoordObj: null,
+      routeCoords: null
     }
   }
 
   componentDidUpdate() {
     // if the user has updated their location
     if ((this.props.lat !== this.state.lat) ||
-    // set state to reflect the new coordinates
      (this.props.lon !== this.state.lon)) {
+        // set state to reflect the new coordinates
        this.setState({ lat: this.props.lat, 
                       lon: this.props.lon })
      }
+
+    if (this.props.routeCoordsObj) {
+      if (this.state.prevCoordObj !== this.props.routeCoordsObj) {
+
+        const coords = this.props.routeCoordsObj.map( el => Object.keys(el)
+        .filter( key => key !== "id") // remove non lat/lon data
+        .map( key => el[key] )) // map to values
+
+        this.setState({ prevCoordObj: this.props.routeCoordsObj,
+                        routeCoords: coords })
+
+      }
+    }
   }
 
   // update current position based on click. This invokes a 
@@ -29,17 +44,42 @@ class MapDisplay extends React.Component {
 
   // update zoom state when map view changed
   zoomChangeHanlder = (e) => {
-    this.setState({ zoom: e.target._zoom});
+    this.setState({ zoom: e.target._zoom });
   }
 
   // auto open the pop-up
   openPopUp = (e) => {
     e.target.openPopup()
   }
+
+  // get outward journey section of the coordinates
+  outwardSection = () => {
+    const routeCoordsLen = this.state.routeCoords? this.state.routeCoords.length: 0;
+    const arrayHalved = routeCoordsLen > 0? Math.floor(routeCoordsLen/2): 0;
+
+    if (this.state.routeCoords) {
+      return this.state.routeCoords.slice(0, arrayHalved);
+    }
+  }
+
+    // get return journey section of the coordinates
+    returnSection = () => {
+      const routeCoordsLen = this.state.routeCoords? this.state.routeCoords.length: 0;
+      const arrayHalved = routeCoordsLen > 0? Math.floor(routeCoordsLen/2): 0;
+  
+      if (this.state.routeCoords) {
+        return this.state.routeCoords.slice(arrayHalved, routeCoordsLen)
+      }
+    }
+
  
   render() {
     const position = [this.state.lat, this.state.lon];
-    return (
+
+    
+    
+    
+    const preRouteLoad = (
       <Map center={position} onClick={(e) => this.updateCoords(e)} 
           onZoomend={(e) => this.zoomChangeHanlder(e)} zoom={this.state.zoom}>
         <TileLayer
@@ -54,6 +94,24 @@ class MapDisplay extends React.Component {
         </Marker>
       </Map>
     );
+
+    const postRouteLoad = (
+      <Map center={position} onClick={(e) => this.updateCoords(e)} 
+          onZoomend={(e) => this.zoomChangeHanlder(e)} zoom={this.state.zoom}>
+        <TileLayer
+            url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
+        />
+        
+        <Polyline color="blue" positions={this.outwardSection()} />
+        <Polyline color="red" opacity={0.7} positions={this.returnSection()} />
+      </Map>
+    )
+
+    if (!this.state.routeCoords) {
+      return preRouteLoad;
+    } else {
+      return postRouteLoad;
+    } 
   }
 };
 

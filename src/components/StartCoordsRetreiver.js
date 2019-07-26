@@ -10,7 +10,12 @@ class StartCoordsContainer extends React.Component {
     componentDidMount() {
         window.navigator.geolocation.getCurrentPosition(
             (position) => {
+                // update lat and lon in parent component
                 this.props.updateCoords(position.coords.latitude,
+                    position.coords.longitude)
+                
+                // send request to API to begin graph generation
+                this.props.generateGraph(position.coords.latitude,
                     position.coords.longitude)
             },
             (error) => this.setState({errorMsg: error.message}) 

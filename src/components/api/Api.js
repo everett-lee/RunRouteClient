@@ -6,24 +6,38 @@ class Api extends React.Component {
     state = { modalActive: false,
               modalText: "Generating route"}
 
+    // send initial coordinates to API endpoint to begin generating 
+    // the graph
+    sendCoords = (lat, lon) => {
+        const mainURL = "http://localhost:8080/start/";
+        const query = `coords=(${lat},${lon})`;
+        
+        axios.get(mainURL + query)
+             .catch( (error) => console.log(error) );
+    }
+
+    // send full query to API in order to generate the path
     async sendRequest(options, lat, lon) {
         const query = this.convertToQuery(options,lat,lon);
 
+        // modal is active during graph generation
         this.setState({modalActive: true})
         console.log(query);
 
         const response = await axios
             .get(query)
-            .catch( (error) => this.handleError() );
-    
-        const x = response;
+            .catch( (error) => this.handleError(error) );
 
-        console.log(x);
+        // update modal text
+        this.setState({modalActive: false,
+                       modalText: "Generating route"});
 
-        this.setState({modalActive: false});
+        console.log(response)
+        return response;
     }
 
-    handleError = () => {
+    handleError = (error) => {
+        console.log(error)
         this.setState({ modalText: "Failed to generate route" });
         // keep modal on screen for one second
         return new Promise( resolve => setTimeout(resolve, 1000));

@@ -99,11 +99,11 @@ class Options extends React.Component {
                                 </div>
                                 <div>
                                     <CheckBox onInputChange={this.onPreferredFeaturesButtonInputChange} 
-                                            arg="grassOrDirt" label="Grass or dirt sufaces"/>
+                                            arg="residential" label="Residential streets"/>
                                 </div>
                                 <div>
                                     <CheckBox onInputChange={this.onPreferredFeaturesButtonInputChange} 
-                                            arg="residential" label="Residential streets"/>
+                                            arg="grassOrDirt" label="Grass or dirt sufaces"/>
                                 </div>
                                 <div>
                                     <CheckBox onInputChange={this.onPreferredFeaturesButtonInputChange} 
