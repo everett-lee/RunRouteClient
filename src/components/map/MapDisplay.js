@@ -27,10 +27,10 @@ class MapDisplay extends React.Component {
 
         const coords = this.props.routeCoordsObj.map( el => Object.keys(el)
         .filter( key => key !== "id") // remove non lat/lon data
-        .map( key => el[key] )) // map to values
+        .map( key => el[key] )); // map to values
 
         this.setState({ prevCoordObj: this.props.routeCoordsObj,
-                        routeCoords: coords })
+                        routeCoords: coords });
 
       }
     }
@@ -76,9 +76,6 @@ class MapDisplay extends React.Component {
   render() {
     const position = [this.state.lat, this.state.lon];
 
-    
-    
-    
     const preRouteLoad = (
       <Map center={position} onClick={(e) => this.updateCoords(e)} 
           onZoomend={(e) => this.zoomChangeHanlder(e)} zoom={this.state.zoom}>

@@ -34,11 +34,14 @@ class App extends React.Component {
                          lon: lon });
     }
 
+    // update state in the map component to reset its value
+
     render() {
         return (
         <div>
         <div className="ui container">
-            <Options makeRequest={this.makeRequest} />
+            <Options makeRequest={this.makeRequest}
+                     resetMap={this.resetMap} />
             <Api ref={this.apiRef} />
             <div className="map-display-div">
             <MapDisplay lat={this.state.lat} lon={this.state.lon}

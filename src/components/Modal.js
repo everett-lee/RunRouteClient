@@ -16,8 +16,7 @@ class Modal extends React.Component {
     componentWillUnmount() {
         modalRoot.removeChild(this.el);
     }
-
-
+    
   render() {
     return ReactDOM.createPortal (
         <div className={`ui dimmer modals visibile ${this.props.active === true? "active": ""}`}>

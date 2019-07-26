@@ -37,10 +37,15 @@ class Api extends React.Component {
     }
 
     handleError = (error) => {
-        console.log(error)
-        this.setState({ modalText: "Failed to generate route" });
-        // keep modal on screen for one second
-        return new Promise( resolve => setTimeout(resolve, 1000));
+        let errorMessage;
+        if (error.response) {
+            errorMessage = error.response.data.message
+        } else {
+            errorMessage = "Unable to reach the server"
+        }
+        this.setState({ modalText: `Error: ${errorMessage}` });
+        // keep modal on screen for two seconds
+        return new Promise( resolve => setTimeout(resolve, 2000));
     }
 
     // take the user-specified options and return a string

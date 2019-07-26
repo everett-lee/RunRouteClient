@@ -67,7 +67,7 @@ class Options extends React.Component {
                         <Slider onSliderInputChange={this.onSliderInputChange}/>    
                     </div>
                         <div className="maxGradientVal" style={{marginTop: '20px'}}>
-                            {this.state.maxGradient}
+                            {this.state.maxGradient}%
                         </div>
                     </div>
                     <div className="ui equal width form">
@@ -116,6 +116,9 @@ class Options extends React.Component {
                 </div>
                 <button onClick={() => this.props.makeRequest(this.state)} className="ui button">
                     Find route
+                </button>
+                <button onClick={() => this.props.resetMap()} className="ui button">
+                    Reset map
                 </button>
             </div>
         )
