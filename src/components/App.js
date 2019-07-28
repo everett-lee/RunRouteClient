@@ -3,6 +3,8 @@ import MapDisplay from './map/MapDisplay';
 import Options from './form/Options';
 import Api from './api/Api';
 import StartCoordsRetreiver from './StartCoordsRetreiver';
+import SidebarSection from './sidebar/SidebarSection.js';
+import { Sidebar } from 'semantic-ui-react';
 
 class App extends React.Component {
     constructor(props) {
@@ -10,7 +12,8 @@ class App extends React.Component {
 
         this.state = { lat: 51.505,
                        lon: -0.09,
-                       routeCoordsObj: null}
+                       routeCoordsObj: null,
+                       sideBarSegments: [{ name: "hi", key: 0 }, {name: "yo", key: 1}] }
 
         this.apiRef = React.createRef();    
     }
@@ -39,10 +42,21 @@ class App extends React.Component {
         this.setState({ routeCoordsObj: null })
     }
 
+    renderSidebarSections = () => {
+        return (
+        this.state.sideBarSegments.map( (x) => {
+            return <SidebarSection routeID={x.name} />
+        })
+        )
+    }
 
     render() {
         return (
         <div>
+        <Sidebar visible={true}
+                 width="thin">
+                {this.renderSidebarSections()}
+        </Sidebar>
         <div className="ui container">
             <Options makeRequest={this.makeRequest}
                      resetMap={this.resetMap} />

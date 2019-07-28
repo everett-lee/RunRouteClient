@@ -114,10 +114,10 @@ class Options extends React.Component {
                     </div>
 
                 </div>
-                <button onClick={() => this.props.makeRequest(this.state)} className="ui button">
+                <button onClick={ () => this.props.makeRequest(this.state) } className="ui button">
                     Find route
                 </button>
-                <button onClick={() => this.props.resetMap()} className="ui button">
+                <button onClick={ () => this.props.resetMap() } className="ui button">
                     Reset map
                 </button>
             </div>
