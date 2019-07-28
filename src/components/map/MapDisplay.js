@@ -21,19 +21,6 @@ class MapDisplay extends React.Component {
        this.setState({ lat: this.props.lat, 
                       lon: this.props.lon })
      }
-
-    if (this.props.routeCoordsObj) {
-      if (this.state.prevCoordObj !== this.props.routeCoordsObj) {
-
-        const coords = this.props.routeCoordsObj.map( el => Object.keys(el)
-        .filter( key => key !== "id") // remove the ids
-        .map( key => el[key] )); // map to lat/lon values
-
-        this.setState({ prevCoordObj: this.props.routeCoordsObj,
-                        routeCoords: coords });
-
-      }
-    }
   }
 
   // update current position based on click. This invokes a 
@@ -54,21 +41,21 @@ class MapDisplay extends React.Component {
 
   // get outward journey section of the coordinates
   outwardSection = () => {
-    const routeCoordsLen = this.state.routeCoords? this.state.routeCoords.length: 0;
+    const routeCoordsLen = this.props.routeCoords? this.props.routeCoords.length: 0;
     const arrayHalved = routeCoordsLen > 0? Math.floor(routeCoordsLen/2): 0;
 
-    if (this.state.routeCoords) {
-      return this.state.routeCoords.slice(0, arrayHalved);
+    if (this.props.routeCoords) {
+      return this.props.routeCoords.slice(0, arrayHalved);
     }
   }
 
     // get return journey section of the coordinates
     returnSection = () => {
-      const routeCoordsLen = this.state.routeCoords? this.state.routeCoords.length: 0;
+      const routeCoordsLen = this.props.routeCoords? this.props.routeCoords.length: 0;
       const arrayHalved = routeCoordsLen > 0? Math.floor(routeCoordsLen/2): 0;
   
-      if (this.state.routeCoords) {
-        return this.state.routeCoords.slice(arrayHalved, routeCoordsLen)
+      if (this.props.routeCoords) {
+        return this.props.routeCoords.slice(arrayHalved, routeCoordsLen)
       }
     }
 
@@ -104,7 +91,7 @@ class MapDisplay extends React.Component {
       </Map>
     )
 
-    if (!this.state.routeCoords || !this.props.routeCoordsObj) {
+    if (!this.props.routeCoords) {
       return preRouteLoad;
     } else {
       return postRouteLoad;

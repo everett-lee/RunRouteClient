@@ -3,9 +3,10 @@ import { Segment } from 'semantic-ui-react'
 
 
 const SidebarSection = (props) => {
-    return <Segment content={props.routeID}
+    return <Segment content={props.name}
     id="sidebarSegment"
     textAlign={ "center" }
-    onClick={ (e) => console.log(props.routeID) }/>
+    onClick={ () => 
+        props.reloadOldRoute(props.routeCoords, props.name, props.distance) }/>
 }
 export default SidebarSection;
