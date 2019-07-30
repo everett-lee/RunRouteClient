@@ -58,10 +58,12 @@ class Api extends React.Component {
 
         // convert KM to metres
         const distanceToMetres = options.distance * 1000;
+        // convert to fraction
+        const maxGradient = options.maxGradient/100;
 
         const query = mainURL
         + `coords=(${lat.toFixed(6)},${lon.toFixed(6)}),`
-        + `distance=${distanceToMetres},maxGradient=${options.maxGradient},`
+        + `distance=${distanceToMetres},maxGradient=${maxGradient},`
         + `options=${avoidedFeaturesBools + seperator + preferredFeaturesBools}`
 
         return query;

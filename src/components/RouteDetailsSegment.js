@@ -11,8 +11,8 @@ const RouteDetailsSegment = (props) => {
             </Grid.Column>
             <Grid.Column>
                 { `Distance: ${props.routeDistance? 
-                    Math.round(props.routeDistance)
-                    +'m': ''}` }
+                    (props.routeDistance/1000).toFixed(1)
+                    +'KM': ''}` }
             </Grid.Column>
         </Grid>
         </Segment>
