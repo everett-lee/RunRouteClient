@@ -17,6 +17,7 @@ class App extends React.Component {
                        routeCoords: null,
                        routeName: null,
                        routeDistance: null,
+                       routeGradient: null,
                        sideBarSegments: [] }
 
         this.apiRef = React.createRef();    
@@ -38,7 +39,8 @@ class App extends React.Component {
             queryResponseObj: value.data,
             routeCoords: this.parseCoords(value.data.pathNodes),
             routeName: value.data.startingWay,
-            routeDistance: value.data.distance
+            routeDistance: value.data.distance,
+            routeGradient: value.data.averageGradient
         })});
     }
 
@@ -70,6 +72,7 @@ class App extends React.Component {
                 routeObject = { name: this.state.routeName,
                                 distance: this.state.routeDistance,
                                 routeCoords: this.state.routeCoords, 
+                                gradient: this.state.routeGradient,
                                 key: key };
             }
             
@@ -83,19 +86,23 @@ class App extends React.Component {
 
 
     // retrieves old route when corresponding sidebar button is clicked
-    reloadOldRoute = (routeCoords, name, distance) => {
+    reloadOldRoute = (routeCoords, name, distance, gradient) => {
         this.setState({ routeCoords: routeCoords,
                         routeName: name,
                         routeDistance: distance,
+                        routeGradient: gradient,
                         queryResponseObj: null });
     }
 
     renderSidebarSections = () => {
         return (
         this.state.sideBarSegments.map( (item) => {
+            // render each route from the route object created by the
+            // reset map method
             return <SidebarSection routeCoords={ item.routeCoords }
                                    name={ item.name }
-                                   distance={ item.distance }
+                                   distance ={ item.distance }
+                                   gradient = { item.gradient }
                                    key={ item.key } 
                                    reloadOldRoute={ this.reloadOldRoute } />
         })
@@ -113,7 +120,8 @@ class App extends React.Component {
                      resetMap={ this.resetMap } />
             <Api ref={ this.apiRef } />
             <RouteDetailsSegment routeName={ this.state.routeName }
-                                 routeDistance={ this.state.routeDistance } />
+                                 routeDistance={ this.state.routeDistance }
+                                 routeGradient={ this.state.routeGradient } />
             <div className="map-display-div">
             <MapDisplay lat={ this.state.lat } lon={ this.state.lon }
                         updateCoords={ this.updateCoords }
