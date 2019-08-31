@@ -9,8 +9,8 @@ class Api extends React.Component {
     // send initial coordinates to API endpoint to begin generating 
     // the graph
     sendCoords = (lat, lon) => {
-        const mainURL = "http://localhost:8080/start/";
-        const query = `coords=(${lat},${lon})`;
+        const mainURL = "http://localhost:8080/start/args?";
+        const query = `lat=${lat}&lon=${lon}`;
         
         axios.get(mainURL + query)
              .catch( (error) => console.log(error) );
@@ -53,7 +53,7 @@ class Api extends React.Component {
     convertToQuery = (options, lat, lon) => {
         const avoidedFeaturesBools = Object.values(options.avoidedFeatures)
         const preferredFeaturesBools = Object.values(options.preferredFeatures)
-        const mainURL = "http://localhost:8080/route/";
+        const mainURL = "http://localhost:8080/route/args?";
         const seperator = avoidedFeaturesBools.length === 0? "": "," 
 
         // convert KM to metres
@@ -62,8 +62,8 @@ class Api extends React.Component {
         const maxGradient = options.maxGradient/100;
 
         const query = mainURL
-        + `coords=(${lat.toFixed(6)},${lon.toFixed(6)}),`
-        + `distance=${distanceToMetres},maxGradient=${maxGradient},`
+        + `lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}&`
+        + `distance=${distanceToMetres}&maxGradient=${maxGradient}&`
         + `options=${avoidedFeaturesBools + seperator + preferredFeaturesBools}`
 
         return query;

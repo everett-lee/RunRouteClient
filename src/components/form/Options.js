@@ -20,7 +20,7 @@ class Options extends React.Component {
            };
 
         this.state = { distance: null,
-                       maxGradient: 25,
+                       maxGradient: 15,
                        avoidedFeatures: avoidedFeaturesObject,
                        preferredFeatures: preferredFeaturesObject};
     }
@@ -58,7 +58,7 @@ class Options extends React.Component {
                 <div className="ui equal width form">
                     <div className="fields">
                     <div className="field">
-                        <label>Distance (KM)</label>
+                        <label>Target distance (KM)</label>
                         <input type="text" onChange={(e) => this.setState({distance: e.target.value})} 
                         placeholder="Distance (KM)" />
                     </div>
@@ -95,7 +95,7 @@ class Options extends React.Component {
                                 <label>Preferred features</label>
                                 <div>
                                     <CheckBox onInputChange={this.onPreferredFeaturesButtonInputChange} 
-                                            arg="uphill" label="Uphill routes"/>
+                                            arg="uphill" label="Prefer uphill"/>
                                 </div>
                                 <div>
                                     <CheckBox onInputChange={this.onPreferredFeaturesButtonInputChange} 
@@ -103,7 +103,7 @@ class Options extends React.Component {
                                 </div>
                                 <div>
                                     <CheckBox onInputChange={this.onPreferredFeaturesButtonInputChange} 
-                                            arg="grassOrDirt" label="Grass or dirt sufaces"/>
+                                            arg="grassOrDirt" label="Unpaved sufaces"/>
                                 </div>
                                 <div>
                                     <CheckBox onInputChange={this.onPreferredFeaturesButtonInputChange} 
@@ -118,7 +118,7 @@ class Options extends React.Component {
                     Find route
                 </button>
                 <button onClick={ () => this.props.resetMap() } className="ui button">
-                    Reset map
+                    Save route
                 </button>
             </div>
         )

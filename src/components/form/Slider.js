@@ -4,7 +4,7 @@ const Slider = (props) => {
     return (
     <div className="slidecontainer">
     <input type="range" onChange={event => props.onSliderInputChange(event)} 
-    min={0} max={50} defaultValue={25} className="slider" id="myRange" />
+    min={0} max={30} defaultValue={15} className="slider" id="myRange" />
     </div>
     );
 };

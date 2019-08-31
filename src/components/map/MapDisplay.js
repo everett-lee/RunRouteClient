@@ -99,4 +99,4 @@ class MapDisplay extends React.Component {
   }
 };
 
-export default MapDisplay;
+export default MapDisplay;  

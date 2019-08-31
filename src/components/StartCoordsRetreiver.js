@@ -21,8 +21,6 @@ class StartCoordsContainer extends React.Component {
             (error) => this.setState({errorMsg: error.message}) 
         );
     }
-
-    // component did update => send API request to generate graph
     render() { 
         return null;
     }
