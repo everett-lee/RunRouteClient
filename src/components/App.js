@@ -31,17 +31,21 @@ class App extends React.Component {
     // receive input data from the the form in the Options class
     makeRequest = (options) => {
         const response = this.apiRef.current.sendRequest(options, this.state.lat, this.state.lon);
-        
+
         // update state with returned coordinates and updated mat setting
         response.then( (value) => {
-            console.log(value) 
-            this.setState({
-            queryResponseObj: value.data,
-            routeCoords: this.parseCoords(value.data.pathNodes),
-            routeName: value.data.startingWay,
-            routeDistance: value.data.distance,
-            routeGradient: value.data.averageGradient
-        })});
+            if (value) {
+                console.log(value) 
+                if (value.data)
+                this.setState({
+                queryResponseObj: value.data,
+                routeCoords: this.parseCoords(value.data.pathNodes),
+                routeName: value.data.startingWay,
+                routeDistance: value.data.distance,
+                routeGradient: value.data.averageGradient
+                })
+            }   
+        });
     }
 
     // retrieve the coordinates from the JSON response
