@@ -1,7 +1,10 @@
 import React from 'react';
-import CheckBox from './CheckBox';
-import Slider from './Slider';
+import MainFormTop from './MainFormTop';
+import MainFormMid from './MainFormMid';
+import { Segment } from 'semantic-ui-react';
 
+// used to provide paramaters for the route
+// generation process
 class Options extends React.Component {
     constructor(props) {
         super(props);
@@ -25,7 +28,12 @@ class Options extends React.Component {
                        preferredFeatures: preferredFeaturesObject};
     }
 
-    // update state on change to slider value
+    // update distance on input
+    onDistanceInput = (event) => {
+        this.setState({ distance: event.target.value });
+    }
+
+    // update max gradient on change to slider value
     onSliderInputChange = (event)=> {
         this.setState({ maxGradient: event.target.value });
     }
@@ -54,73 +62,23 @@ class Options extends React.Component {
 
     render (props) {
         return (
-            <div className="ui segment">
-                <div className="ui equal width form">
-                    <div className="fields">
-                    <div className="field">
-                        <label>Target distance (KM)</label>
-                        <input type="text" onChange={(e) => this.setState({distance: e.target.value})} 
-                        placeholder="Distance (KM)" />
-                    </div>
-                    <div className="field" style={{marginLeft: '25px'}}>
-                        <label>Maximum gradient</label>
-                        <Slider onSliderInputChange={this.onSliderInputChange}/>    
-                    </div>
-                        <div className="maxGradientVal" style={{marginTop: '20px'}}>
-                            {this.state.maxGradient}%
-                        </div>
-                    </div>
-                    <div className="ui equal width form">
-                        <div className="fields">
-                            <div className="field">
-                                <label>Features to avoid</label>
-                                <div>
-                                    <CheckBox onInputChange={this.onAvoidedFeaturesButtonInputChange} 
-                                    arg ="majorRoads" label="Major roads"/>
-                                </div>
-                                <div>
-                                    <CheckBox onInputChange={this.onAvoidedFeaturesButtonInputChange} 
-                                    arg = "steps" label="Steps"/>
-                                </div>
-                                <div>
-                                    <CheckBox onInputChange={this.onAvoidedFeaturesButtonInputChange} 
-                                    arg = "concrete" label="Concrete"/>
-                                </div>
-                                <div>
-                                    <CheckBox onInputChange={this.onAvoidedFeaturesButtonInputChange} 
-                                    arg = "unlit" label="Unlit streets"/>
-                                </div>
-                            </div>
-                            <div className="field">
-                                <label>Preferred features</label>
-                                <div>
-                                    <CheckBox onInputChange={this.onPreferredFeaturesButtonInputChange} 
-                                            arg="uphill" label="Prefer uphill"/>
-                                </div>
-                                <div>
-                                    <CheckBox onInputChange={this.onPreferredFeaturesButtonInputChange} 
-                                            arg="residential" label="Residential streets"/>
-                                </div>
-                                <div>
-                                    <CheckBox onInputChange={this.onPreferredFeaturesButtonInputChange} 
-                                            arg="grassOrDirt" label="Unpaved sufaces"/>
-                                </div>
-                                <div>
-                                    <CheckBox onInputChange={this.onPreferredFeaturesButtonInputChange} 
-                                            arg="backroads" label="Backroads and pathways"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+            <Segment>
+                <MainFormTop 
+                    onSliderInputChange={ this.onSliderInputChange }
+                    onDistanceInput={ this.onDistanceInput }
+                    maxGradient={ this.state.maxGradient }
+                />
+                <MainFormMid
+                    onAvoidedFeaturesButtonInputChange={ this.onAvoidedFeaturesButtonInputChange }
+                    onPreferredFeaturesButtonInputChange={ this.onPreferredFeaturesButtonInputChange }
+                />
                 <button onClick={ () => this.props.makeRequest(this.state) } className="ui button">
                     Find route
                 </button>
                 <button onClick={ () => this.props.resetMap() } className="ui button">
                     Save route
                 </button>
-            </div>
+            </Segment>
         )
     }    
 }

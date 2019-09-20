@@ -1,6 +1,8 @@
 import React from 'react';
 import { Map, Marker, TileLayer, Popup, Polyline }  from 'react-leaflet';
 
+// main map display class for presenting the current
+// location and route
 class MapDisplay extends React.Component {
   constructor(props) {
     super(props)
@@ -55,7 +57,7 @@ class MapDisplay extends React.Component {
       const arrayHalved = routeCoordsLen > 0? Math.floor(routeCoordsLen/2): 0;
   
       if (this.props.routeCoords) {
-        return this.props.routeCoords.slice(arrayHalved, routeCoordsLen)
+        return this.props.routeCoords.slice(arrayHalved - 1, routeCoordsLen)
       }
     }
 

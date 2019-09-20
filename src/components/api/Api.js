@@ -2,6 +2,9 @@ import React from 'react';
 import Modal from '../Modal';
 import axios from 'axios';
 
+// manages the creation and dispatch of HTTP 
+// requests to the server. Also activates modal
+// 'spinner' while request is being sent.
 class Api extends React.Component {
     state = { modalActive: false,
               modalText: "Generating route"}
