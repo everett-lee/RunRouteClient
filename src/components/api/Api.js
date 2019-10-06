@@ -8,14 +8,16 @@ import axios from 'axios';
 class Api extends React.Component {
     state = { modalActive: false,
               modalText: "Generating route"}
+    
+    domain = "http://localhost:8080";
 
     // send initial coordinates to API endpoint to begin generating 
     // the graph
     sendCoords = (lat, lon) => {
-        const mainURL = "http://localhost:8080/start/args?";
         const query = `lat=${lat}&lon=${lon}`;
+        const head = "/start/args?";
         
-        axios.get(mainURL + query)
+        axios.get(this.domain + head + query)
              .catch( (error) => console.log(error) );
     }
 
@@ -56,15 +58,15 @@ class Api extends React.Component {
     convertToQuery = (options, lat, lon) => {
         const avoidedFeaturesBools = Object.values(options.avoidedFeatures)
         const preferredFeaturesBools = Object.values(options.preferredFeatures)
-        const mainURL = "http://localhost:8080/route/args?";
         const seperator = avoidedFeaturesBools.length === 0? "": "," 
+        const head = "/route/args?";
 
         // convert KM to metres
         const distanceToMetres = options.distance * 1000;
         // convert to fraction
         const maxGradient = options.maxGradient/100;
 
-        const query = mainURL
+        const query = this.domain + head
         + `lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}&`
         + `distance=${distanceToMetres}&maxGradient=${maxGradient}&`
         + `options=${avoidedFeaturesBools + seperator + preferredFeaturesBools}`
