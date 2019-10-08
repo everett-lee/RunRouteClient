@@ -28,27 +28,30 @@ class App extends React.Component {
         this.apiRef.current.sendCoords(lat, lon);
     }
     
-    // receive input data from the the form in the Options class
+    // send request to server containing coordinates along with
+    // the route parameters  
     makeRequest = (options) => {
         const response = this.apiRef.current.sendRequest(options, this.state.lat, this.state.lon);
 
-        // update state with returned coordinates and updated mat setting
+        // update state with returned coordinates and updated map setting
         response.then( (value) => {
             if (value) {
                 console.log(value) 
-                if (value.data)
-                this.setState({
-                queryResponseObj: value.data,
-                routeCoords: this.parseCoords(value.data.pathNodes),
-                routeName: value.data.startingWay,
-                routeDistance: value.data.distance,
-                routeGradient: value.data.averageGradient
-                })
+                if (value.data) {
+                    this.setState(
+                        { queryResponseObj: value.data,
+                        routeCoords: this.parseCoords(value.data.pathNodes),
+                        routeName: value.data.startingWay,
+                        routeDistance: value.data.distance,
+                        routeGradient: value.data.averageGradient }
+                    )
+                }
             }   
         });
     }
 
-    // retrieve the coordinates from the JSON response
+    // parse JSON response from server to retrieve the route
+    // coordinates
     parseCoords = (pathNodesArray) => {
         const coords = pathNodesArray.map( el => Object.keys(el)
         .filter( key => key !== "id") // remove the ids
@@ -63,7 +66,7 @@ class App extends React.Component {
                          lon: lon });
     }
 
-    // reset routeCoords. Causes map to rerender to default position
+    // reset routeCoords. Causes map to re-render to default position
     resetMap = () => {
         // if a unsaved route has been loaded
         if (this.state.queryResponseObj) {
@@ -116,24 +119,24 @@ class App extends React.Component {
     render() {
         return (
         <div>
-        <Sidebar visible={true}>
-                { this.renderSidebarSections() }
-        </Sidebar>
-        <div className="ui container">
-            <Options makeRequest={ this.makeRequest }
-                     resetMap={ this.resetMap } />
-            <Api ref={ this.apiRef } />
-            <RouteDetailsSegment routeName={ this.state.routeName }
-                                 routeDistance={ this.state.routeDistance }
-                                 routeGradient={ this.state.routeGradient } />
-            <div className="map-display-div">
-            <MapDisplay lat={ this.state.lat } lon={ this.state.lon }
-                        updateCoords={ this.updateCoords }
-                        routeCoords={ this.state.routeCoords } />                
+            <Sidebar visible={true}>
+                    { this.renderSidebarSections() }
+            </Sidebar>
+            <div className="ui container">
+                <Options makeRequest={ this.makeRequest }
+                        resetMap={ this.resetMap } />
+                <Api ref={ this.apiRef } />
+                <RouteDetailsSegment routeName={ this.state.routeName }
+                                    routeDistance={ this.state.routeDistance }
+                                    routeGradient={ this.state.routeGradient } />
+                <div className="map-display-div">
+                <MapDisplay lat={ this.state.lat } lon={ this.state.lon }
+                            updateCoords={ this.updateCoords }
+                            routeCoords={ this.state.routeCoords } />                
+                </div>
+                <StartCoordsRetreiver updateCoords={ this.updateCoords }
+                                    generateGraph={ this.generateGraph } />
             </div>
-            <StartCoordsRetreiver updateCoords={ this.updateCoords }
-                                  generateGraph={ this.generateGraph } />
-        </div>
         </div>
         )
     }

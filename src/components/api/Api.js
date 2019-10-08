@@ -3,13 +3,13 @@ import Modal from '../Modal';
 import axios from 'axios';
 
 // manages the creation and dispatch of HTTP 
-// requests to the server. Also activates modal
+// requests to the server. Also renders modal
 // 'spinner' while request is being sent.
 class Api extends React.Component {
     state = { modalActive: false,
               modalText: "Generating route"}
     
-    domain = "http://localhost:8080";
+    domain = "https://runrouterserver.azurewebsites.net";
 
     // send initial coordinates to API endpoint to begin generating 
     // the graph

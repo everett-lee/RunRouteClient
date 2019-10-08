@@ -65,6 +65,7 @@ class MapDisplay extends React.Component {
   render() {
     const position = [this.state.lat, this.state.lon];
 
+    // map to display without route
     const preRouteLoad = (
       <Map center={position} onClick={(e) => this.updateCoords(e)} 
           onZoomend={(e) => this.zoomChangeHanlder(e)} zoom={this.state.zoom}>
@@ -81,6 +82,7 @@ class MapDisplay extends React.Component {
       </Map>
     );
 
+    // map to display when the route has been loaded 
     const postRouteLoad = (
       <Map center={position} onClick={(e) => this.updateCoords(e)} 
           onZoomend={(e) => this.zoomChangeHanlder(e)} zoom={this.state.zoom}>

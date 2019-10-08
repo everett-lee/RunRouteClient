@@ -1,4 +1,5 @@
 import React from 'react';
+// retrieves the user's coordinates on loading the map
 class StartCoordsContainer extends React.Component {   
     constructor(props) {
         super(props);
