@@ -16,6 +16,10 @@
     width: 25%;
 }
 
+.maxGradientVal {
+    min-width: 30px;
+}
+
 #sidebarSegment {
     margin: 0;
 }

@@ -9,7 +9,7 @@ class Api extends React.Component {
     state = { modalActive: false,
               modalText: "Generating route"}
     
-    domain = "https://runrouterserver.azurewebsites.net";
+    domain = "http://localhost:8080";
 
     // send initial coordinates to API endpoint to begin generating 
     // the graph
