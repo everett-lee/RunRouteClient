@@ -2,8 +2,8 @@ import React from 'react';
 import MapDisplay from './map/MapDisplay';
 import Options from './form/Options';
 import Api from './api/Api';
-import StartCoordsRetreiver from './StartCoordsRetreiver';
-import SidebarSection from './sidebar/SidebarSection.js';
+import StartCoordsRetriever from './StartCoordsRetriever';
+import SidebarSection from './sidebar/SidebarSection';
 import { Sidebar } from 'semantic-ui-react';
 import RouteDetailsSegment from './RouteDetailsSegment';
 
@@ -134,7 +134,7 @@ class App extends React.Component {
                             updateCoords={ this.updateCoords }
                             routeCoords={ this.state.routeCoords } />                
                 </div>
-                <StartCoordsRetreiver updateCoords={ this.updateCoords }
+                <StartCoordsRetriever updateCoords={ this.updateCoords }
                                     generateGraph={ this.generateGraph } />
             </div>
         </div>
