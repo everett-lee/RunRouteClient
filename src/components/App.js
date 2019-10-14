@@ -25,7 +25,8 @@ class App extends React.Component {
 
     // use initial coordinates to start graph generation
     generateGraph = (lat, lon) => {
-        this.apiRef.current.sendCoords(lat, lon);
+        this.apiRef.current.sendCoords(lat, lon); // use context instead to
+        // update state in api class 
     }
     
     // send request to server containing coordinates along with
