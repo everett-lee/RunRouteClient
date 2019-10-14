@@ -51,15 +51,15 @@ class MapDisplay extends React.Component {
     }
   }
 
-    // get return journey section of the coordinates
-    returnSection = () => {
-      const routeCoordsLen = this.props.routeCoords? this.props.routeCoords.length: 0;
-      const arrayHalved = routeCoordsLen > 0? Math.floor(routeCoordsLen/2): 0;
+  // get return journey section of the coordinates
+  returnSection = () => {
+    const routeCoordsLen = this.props.routeCoords? this.props.routeCoords.length: 0;
+    const arrayHalved = routeCoordsLen > 0? Math.floor(routeCoordsLen/2): 0;
   
-      if (this.props.routeCoords) {
-        return this.props.routeCoords.slice(arrayHalved - 1, routeCoordsLen)
-      }
+    if (this.props.routeCoords) {
+      return this.props.routeCoords.slice(arrayHalved - 1, routeCoordsLen)
     }
+  }
 
  
   render() {

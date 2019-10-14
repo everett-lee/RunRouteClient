@@ -3,7 +3,7 @@ import MockApi from '../utils/MockApi';
 import MockMap from '../utils/MockMap';
 import App from "../components/App"; 
 import React from "react";
-import { create } from "react-test-renderer";
+import testRenderer from "react-test-renderer";
 
 jest.mock('../components/api/Api', () => {
     const Api = () => MockApi;
@@ -15,17 +15,28 @@ jest.mock('../components/map/MapDisplay', () => {
     return Map;
   });
 
-const mockObj = { coords: { latitude: 13, longitude: 8 } };
 const mockGeolocation = {
-    getCurrentPosition: jest.fn( () => mockObj),
-};
-  
+    getCurrentPosition: jest.fn()
+      .mockImplementationOnce((success) => Promise.resolve(success({
+        coords: {
+          latitude: 5,
+          longitude: 11
+        }
+      })))
+  };
+
 global.navigator.geolocation = mockGeolocation;
 
 describe("Test the location", () => {
     test("it response with coordinates when called", () => {
-        const component = create(<App />);
-        const instance = component.getInstance();
+        let component;
+        let instance;
+
+        component = testRenderer.create(<StartCoordsRetriever />)
+        instance = component.getInstance();
+        instance.generateGraph = jest.fn( (x,y) => x + y);
+
+        instance = component.getInstance();
         expect(instance.state.lat).toBe(13);
     });
 });

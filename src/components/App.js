@@ -68,9 +68,9 @@ class App extends React.Component {
 
     // reset routeCoords. Causes map to re-render to default position
     resetMap = () => {
-        // if a unsaved route has been loaded
+        // if an unsaved route has been loaded
         if (this.state.queryResponseObj) {
-            // number of generated routes
+            // the number of generated routes
             const key = this.state.sideBarSegments.length
             
             var routeObject = null;
@@ -81,10 +81,9 @@ class App extends React.Component {
                                 routeCoords: this.state.routeCoords, 
                                 gradient: this.state.routeGradient,
                                 key: key };
-            }
-            
-            if (routeObject) {
-                this.state.sideBarSegments.push(routeObject);
+                
+                // push route to the sidebar
+                this.state.sideBarSegments.push(routeObject);                ;
             }
         }
 
