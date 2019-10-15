@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { CoordContext } from './CoordProvider';
+import { ApiContext } from './api/ApiProvider';
 
 // retrieves the user's coordinates on loading the map
 const StartCoordsContainer = (props) => {   
-    const [coords, setCoords] = useState([]);
     const [errorMsg, setErrorMsg] = useState([]);
-     
+
+    const coordsContext = useContext(CoordContext);
+    const apiContext = useContext(ApiContext);
 
     // get the current location from the user
     useEffect( () => {
@@ -12,13 +15,11 @@ const StartCoordsContainer = (props) => {
             (position) => {
                 let lat = position.coords.latitude
                 let lon = position.coords.longitude
-
-                // update lat and lon in parent component
-                setCoords( [lat, lon] );
-                props.updateCoords(lat, lon);
-
+                // update lat and lon in context
+                coordsContext.setCoords( { lat, lon });
+                
                 // send request to API to begin graph generation
-                props.generateGraph(lat, lon);
+                apiContext.sendCoords(lat, lon);
             },
             (error) => setErrorMsg({errorMsg: error.message} 
             ))
