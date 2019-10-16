@@ -28,6 +28,8 @@ const ApiProvider = ({ children }) => {
 
     // send full query to API in order to generate the path
     const sendRequest = async (options, lat, lon) => {
+        setModalText("Generating route");
+
         const query = convertToQuery(options,lat,lon);
         
         // modal is active during graph generation
@@ -40,7 +42,7 @@ const ApiProvider = ({ children }) => {
         // update modal text
         setModal(false);
 
-        if (response.data) {
+        if (response) {
             return {
                 routeCoords: parseCoords(response.data.pathNodes),
                 routeName: response.data.startingWay,

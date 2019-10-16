@@ -1,15 +1,15 @@
-import { useState, useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { CoordContext } from './providers/CoordProvider';
 import { ApiContext } from './providers/ApiProvider';
 
 // retrieves the user's coordinates on loading the map
-const StartCoordsContainer = (props) => {   
-    const [errorMsg, setErrorMsg] = useState([]);
+const StartCoordsContainer = (props) => { 
 
     const coordsContext = useContext(CoordContext);
     const apiContext = useContext(ApiContext);
 
-    // get the current location from the user
+    // get the current location from the user once
+    // on first load 
     useEffect( () => {
         window.navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -21,8 +21,8 @@ const StartCoordsContainer = (props) => {
                 // send request to API to begin graph generation
                 apiContext.sendCoords(lat, lon);
             },
-            (error) => setErrorMsg({errorMsg: error.message} 
-            ))
+            (error) => console.log(error)
+            )
     }, []);
 
     return null;

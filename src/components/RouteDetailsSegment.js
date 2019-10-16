@@ -1,6 +1,7 @@
 import React from 'react';
 import { Segment, Grid } from 'semantic-ui-react';
 
+// displays details of a generated route 
 const RouteDetailsSegment = (props) => {
     const lat = props.coords.lat.toFixed(2)
     const lon = props.coords.lon.toFixed(2)

@@ -31,7 +31,7 @@ const App = () => {
 
         // update state with returned coordinates and updated map setting
         response.then ( routeObject => {
-            setRouteObject(routeObject);
+            setRouteObject(routeObject || nullRoute);
         });
     }
 
@@ -49,16 +49,14 @@ const App = () => {
                             key: key };
                 
             // push route to the sidebar
-            setsideBarSegments(sideBarSegments.concat([sidebarRouteObject]))             ;
-
+            setsideBarSegments(sideBarSegments.concat([sidebarRouteObject]));
         }
-
         setRouteObject(nullRoute);
     }
 
     // retrieves old route when corresponding sidebar button is clicked
-    const reloadOldRoute = (routeCoords, name, distance, gradient) => {
-        setRouteObject( { routeCoords, name, distance, gradient } )
+    const reloadOldRoute = (routeCoords, routeName, routeDistance, routeGradient) => {
+        setRouteObject( { routeCoords, routeName, routeDistance, routeGradient } )
     }
 
     const renderSidebarSections = () => {
@@ -90,7 +88,7 @@ const App = () => {
                                         routeDistance={ routeObject.routeDistance }
                                         routeGradient={ routeObject.routeGradient } />
                     <div className="map-display-div">
-                    <MapDisplay routeCoords={ routeObject.routeCoords } />                
+                        <MapDisplay routeCoords={ routeObject.routeCoords } />                
                     </div>
                     <StartCoordsRetriever />
                 </div>
