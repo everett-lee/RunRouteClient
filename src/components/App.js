@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Sidebar } from 'semantic-ui-react';
 
 import MapDisplay from './map/MapDisplay';
@@ -7,73 +7,63 @@ import RouteDetailsSegment from './RouteDetailsSegment';
 import StartCoordsRetriever from './StartCoordsRetriever';
 import SidebarSection from './sidebar/SidebarSection';
 
-import { ApiContext } from './api/ApiProvider';
-import { CoordContext } from './CoordProvider';
+import { ApiContext } from './providers/ApiProvider';
+import { CoordContext } from './providers/CoordProvider';
 
 const App = () => {
     const apiContext = useContext(ApiContext);
     const coordContext = useContext(CoordContext);
 
-    const state = { lat: 51.505,
-                       lon: -0.09,
-                       queryResponseObj: null,
-                       routeCoords: null,
-                       routeName: null,
-                       routeDistance: null,
-                       routeGradient: null,
-                       sideBarSegments: [] }   
-    
+    const nullRoute = {
+        routeCoords: null,
+        routeName: null,
+        routeDistance: null,
+        routeGradient: null }
+
+    const [routeObject, setRouteObject] = useState(nullRoute);
+    const [sideBarSegments, setsideBarSegments] = useState([]);
+   
     // send request to server containing coordinates along with
     // the route parameters  
     const makeRequest = (options) => {
         const coords = coordContext.coords;
         const response = apiContext.sendRequest(options, coords.lat, coords.lon);
 
-        console.log(response);
         // update state with returned coordinates and updated map setting
-    }
-
-    // update the coordinates from a child component
-    const updateCoords = (lat, lon) => {
-         // update it
+        response.then ( routeObject => {
+            setRouteObject(routeObject);
+        });
     }
 
     // reset routeCoords. Causes map to re-render to default position
     const resetMap = () => {
-        // if an unsaved route has been loaded
-        if (state.queryResponseObj) {
+        // if an unsaved route has been generated
+        if (routeObject.routeName) {
             // the number of generated routes
-            const key = state.sideBarSegments.length
+            const key = sideBarSegments.length
             
-            var routeObject = null;
-            // if a route has been generated 
-            if (state.routeCoords) {
-                routeObject = { name: state.routeName,
-                                distance: state.routeDistance,
-                                routeCoords: state.routeCoords, 
-                                gradient: state.routeGradient,
-                                key: key };
+            const sidebarRouteObject = { name: routeObject.routeName,
+                            distance: routeObject.routeDistance,
+                            routeCoords: routeObject.routeCoords, 
+                            gradient: routeObject.routeGradient,
+                            key: key };
                 
-                // push route to the sidebar
-                state.sideBarSegments.push(routeObject);                ;
-            }
+            // push route to the sidebar
+            setsideBarSegments(sideBarSegments.concat([sidebarRouteObject]))             ;
+
         }
 
-        state.routeCoords = null;
+        setRouteObject(nullRoute);
     }
 
     // retrieves old route when corresponding sidebar button is clicked
     const reloadOldRoute = (routeCoords, name, distance, gradient) => {
-        state.routeCoords = routeCoords;
-        state.routeName = name;
-        state.routeDistance = distance;
-        state.routeGradient = gradient;
-        state.queryResponseObj = null;
+        setRouteObject( { routeCoords, name, distance, gradient } )
     }
 
     const renderSidebarSections = () => {
         return (
-            state.sideBarSegments.map( (item) => {
+            sideBarSegments.map( (item) => {
             // render each route from the route object created by the
             // reset map method
             return <SidebarSection routeCoords={ item.routeCoords }
@@ -94,13 +84,13 @@ const App = () => {
                 <div className="ui container">
                     <Options makeRequest={ makeRequest }
                             resetMap={ resetMap } />
-                    <RouteDetailsSegment routeName={ state.routeName }
-                                        routeDistance={ state.routeDistance }
-                                        routeGradient={ state.routeGradient } />
+                    <RouteDetailsSegment
+                                        coords={ coordContext.coords}
+                                        routeName={ routeObject.routeName }
+                                        routeDistance={ routeObject.routeDistance }
+                                        routeGradient={ routeObject.routeGradient } />
                     <div className="map-display-div">
-                    <MapDisplay lat={ state.lat } lon={ state.lon }
-                                updateCoords={ updateCoords }
-                                routeCoords={ state.routeCoords } />                
+                    <MapDisplay routeCoords={ routeObject.routeCoords } />                
                     </div>
                     <StartCoordsRetriever />
                 </div>

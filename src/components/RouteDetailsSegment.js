@@ -2,12 +2,15 @@ import React from 'react';
 import { Segment, Grid } from 'semantic-ui-react';
 
 const RouteDetailsSegment = (props) => {
+    const lat = props.coords.lat.toFixed(2)
+    const lon = props.coords.lon.toFixed(2)
+
     return (
         <Segment >
         <Grid columns={3} textAlign={"center"}>
             <Grid.Column>
                 { `Route start: ${props.routeName? 
-                    props.routeName: ''}` }
+                    props.routeName: ' '}` } ({lat}, {lon})
             </Grid.Column>
             <Grid.Column>
                 { `Distance: ${props.routeDistance? 

@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
-import { CoordContext } from './CoordProvider';
-import { ApiContext } from './api/ApiProvider';
+import { CoordContext } from './providers/CoordProvider';
+import { ApiContext } from './providers/ApiProvider';
 
 // retrieves the user's coordinates on loading the map
 const StartCoordsContainer = (props) => {   

@@ -1,9 +1,9 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, createContext } from 'react';
 import Modal from '../Modal';
 import axios from 'axios';
 
-const ApiContext = React.createContext();
+const ApiContext = createContext();
 
 // manages the creation and dispatch of HTTP 
 // requests to the server. Also renders modal
@@ -29,7 +29,7 @@ const ApiProvider = ({ children }) => {
     // send full query to API in order to generate the path
     const sendRequest = async (options, lat, lon) => {
         const query = convertToQuery(options,lat,lon);
-
+        
         // modal is active during graph generation
         setModal(true);
 
@@ -41,7 +41,7 @@ const ApiProvider = ({ children }) => {
         setModal(false);
 
         if (response.data) {
-            return { queryResponseObj: response.data,
+            return {
                 routeCoords: parseCoords(response.data.pathNodes),
                 routeName: response.data.startingWay,
                 routeDistance: response.data.distance,

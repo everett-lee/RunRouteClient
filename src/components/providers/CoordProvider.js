@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, createContext } from 'react';
 
-const CoordContext = React.createContext();
+const CoordContext = createContext();
 
 const CoordProvider = ({ children }) => {
     const initialState = { lat: 51.505, lon: -0.09,};
