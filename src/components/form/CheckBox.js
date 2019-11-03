@@ -8,7 +8,7 @@ const OptionsCheckBox = (props) =>
                 props.onInputChange(props.arg)}></input>
             <label>{props.label}</label>
            </div>
-        )
-    }
+        );
+    };
 
 export default OptionsCheckBox;

@@ -21,6 +21,6 @@ const MainFormTop = (props) =>
              </div>
         </Form.Group>
     </Form> 
-)
+);
 
 export default MainFormTop;

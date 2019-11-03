@@ -13,8 +13,8 @@ const StartCoordsContainer = (props) => {
     useEffect( () => {
         window.navigator.geolocation.getCurrentPosition(
             (position) => {
-                let lat = position.coords.latitude
-                let lon = position.coords.longitude
+                let lat = position.coords.latitude;
+                let lon = position.coords.longitude;
                 // update lat and lon in context
                 coordsContext.setCoords( { lat, lon });
                 
@@ -22,8 +22,8 @@ const StartCoordsContainer = (props) => {
                 apiContext.sendCoords(lat, lon);
             },
             (error) => console.log(error)
-            )
-    }, []);
+            );
+         }, []);
 
     return null;
 };

@@ -20,8 +20,6 @@ const ApiProvider = ({ children }) => {
         const query = `lat=${lat}&lon=${lon}`;
         const head = "/start/args?";
         
-        console.log("query sent")
-        
         axios.get(domain + head + query)
              .catch( (error) => console.log(error) );
     }
@@ -47,8 +45,8 @@ const ApiProvider = ({ children }) => {
                 routeCoords: parseCoords(response.data.pathNodes),
                 routeName: response.data.startingWay,
                 routeDistance: response.data.distance,
-                routeGradient: response.data.averageGradient }
-        }
+                routeGradient: response.data.averageGradient };
+        };
     };
 
     // parse JSON response from server to retrieve the route
@@ -58,15 +56,15 @@ const ApiProvider = ({ children }) => {
         .filter( key => key !== "id") // remove the ids
         .map( key => el[key] )); // map to lat/lon values
 
-        return coords
+        return coords;
     }
 
     const handleError = (error) => {
         let errorMessage;
         if (error.response) {
-            errorMessage = error.response.data.message
+            errorMessage = error.response.data.message;
         } else {
-            errorMessage = "Unable to reach the server"
+            errorMessage = "Unable to reach the server";
         }
         setModalText(`Error: ${errorMessage}`);
         // keep modal on screen for two seconds
@@ -103,6 +101,5 @@ const ApiProvider = ({ children }) => {
             </ ApiContext.Provider> 
         </div>
     );
-}
-
+};
 export { ApiContext, ApiProvider };

@@ -14,8 +14,8 @@ const MapDisplay = (props) => {
   // coordinates context provider component method
   const updateCoords = (e) => {
     
-    const lat = e.latlng.lat
-    const lon = e.latlng.lng
+    const lat = e.latlng.lat;
+    const lon = e.latlng.lng;
 
     coordsContext.setCoords( { lat, lon });
   };
@@ -23,7 +23,7 @@ const MapDisplay = (props) => {
   // update zoom state when map view changed
   const zoomChangeHanlder = (e) => {
     setZoom(e.target._zoom);
-  }
+  };
 
   // get outward journey section of the coordinates
   const outwardSection = () => {
@@ -33,7 +33,7 @@ const MapDisplay = (props) => {
     if (props.routeCoords) {
       return props.routeCoords.slice(0, arrayHalved);
     }
-  }
+  };
 
   // get return journey section of the coordinates
   const returnSection = () => {
@@ -41,10 +41,9 @@ const MapDisplay = (props) => {
     const arrayHalved = routeCoordsLen > 0? Math.floor(routeCoordsLen/2): 0;
   
     if (props.routeCoords) {
-      return props.routeCoords.slice(arrayHalved - 1, routeCoordsLen)
+      return props.routeCoords.slice(arrayHalved - 1, routeCoordsLen);
     }
-  
-  } 
+  };
 
   const position = [coordsContext.coords.lat, coordsContext.coords.lon];
 
@@ -71,7 +70,7 @@ const MapDisplay = (props) => {
       <Polyline color="blue" positions={outwardSection()} />
       <Polyline color="red" opacity={0.7} positions={returnSection()} />
     </Map>
-  )
+  );
 
     if (!props.routeCoords) {
       return preRouteLoad;

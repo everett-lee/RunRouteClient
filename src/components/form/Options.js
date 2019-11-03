@@ -80,6 +80,6 @@ class Options extends React.Component {
                 </button>
             </Segment>
         )
-    }    
+    }
 }
 export default Options;

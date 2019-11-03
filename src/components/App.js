@@ -18,7 +18,7 @@ const App = () => {
         routeCoords: null,
         routeName: null,
         routeDistance: null,
-        routeGradient: null }
+        routeGradient: null };
 
     const [routeObject, setRouteObject] = useState(nullRoute);
     const [sideBarSegments, setsideBarSegments] = useState([]);
@@ -33,31 +33,31 @@ const App = () => {
         response.then ( routeObject => {
             setRouteObject(routeObject || nullRoute);
         });
-    }
+    };
 
     // reset routeCoords. Causes map to re-render to default position
     const resetMap = () => {
         // if an unsaved route has been generated
         if (routeObject.routeName) {
             // the number of generated routes
-            const key = sideBarSegments.length
+            const key = sideBarSegments.length;
             
             const sidebarRouteObject = { name: routeObject.routeName,
                             distance: routeObject.routeDistance,
                             routeCoords: routeObject.routeCoords, 
                             gradient: routeObject.routeGradient,
-                            key: key };
+                            key: key }; 
                 
             // push route to the sidebar
             setsideBarSegments(sideBarSegments.concat([sidebarRouteObject]));
-        }
+        };
         setRouteObject(nullRoute);
-    }
+    };
 
     // retrieves old route when corresponding sidebar button is clicked
     const reloadOldRoute = (routeCoords, routeName, routeDistance, routeGradient) => {
-        setRouteObject( { routeCoords, routeName, routeDistance, routeGradient } )
-    }
+        setRouteObject( { routeCoords, routeName, routeDistance, routeGradient } );
+    };
 
     const renderSidebarSections = () => {
         return (
@@ -70,9 +70,9 @@ const App = () => {
                                    gradient = { item.gradient }
                                    key={ item.key } 
                                    reloadOldRoute={ reloadOldRoute } />
-        })
+            })
         );
-    }
+    };
 
     return (
         <div>

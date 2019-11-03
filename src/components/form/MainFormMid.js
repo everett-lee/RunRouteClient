@@ -47,6 +47,6 @@ const MainFormMid = (props) =>
                      </Form.Field>
                 </Form.Group>
             </Form> 
-)
+);
 
 export default MainFormMid;

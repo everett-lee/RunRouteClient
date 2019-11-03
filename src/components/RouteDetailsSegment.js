@@ -3,8 +3,8 @@ import { Segment, Grid } from 'semantic-ui-react';
 
 // displays details of a generated route 
 const RouteDetailsSegment = (props) => {
-    const lat = props.coords.lat.toFixed(2)
-    const lon = props.coords.lon.toFixed(2)
+    const lat = props.coords.lat.toFixed(2);
+    const lon = props.coords.lon.toFixed(2);
 
     return (
         <Segment >
@@ -26,7 +26,7 @@ const RouteDetailsSegment = (props) => {
         </Grid>
         </Segment>
     );
-}
+};
 
 
 export default RouteDetailsSegment;
