@@ -3,7 +3,7 @@ import React, { useState, createContext } from 'react';
 const CoordContext = createContext();
 
 const CoordProvider = ({ children }) => {
-    const initialState = { lat: 51.505, lon: -0.09,};
+    const initialState = { lat: 51.505, lon: -0.09 };
     const [coords, setCoords] = useState(initialState);
     
     return (
