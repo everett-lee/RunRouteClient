@@ -45,7 +45,7 @@ const mockGeolocation = {
 
 global.navigator.geolocation = mockGeolocation;
 
-test('Successful display of start coords', () => {
+test('Displays the starting coords', () => {
     const { getByText } = render(<App />);
 
     const lat = 51.505.toFixed(2);
