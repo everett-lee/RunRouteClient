@@ -1,0 +1,25 @@
+.map-display-div {
+}
+.leaflet-container {
+    margin-left: auto;
+    margin-right: auto;
+    height: 600px;
+    width: 800px;
+}
+
+.leaflet-popup-content-wrapper {
+    text-align: center;
+}
+
+.ui.modal {
+    height: 25%;
+    width: 25%;
+}
+
+.maxGradientVal {
+    min-width: 30px;
+}
+
+#sidebarSegment {
+    margin: 0;
+}
