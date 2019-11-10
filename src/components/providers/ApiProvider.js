@@ -19,23 +19,23 @@ const ApiProvider = ({ children }) => {
     const sendCoords = (lat, lon) => {
         const query = `lat=${lat}&lon=${lon}`;
         const head = "/start/args?";
-        
+
         axios.get(domain + head + query)
-             .catch( (error) => console.log(error) );
+            .catch((error) => console.log(error));
     }
 
     // send full query to API in order to generate the path
     const sendRequest = async (options, lat, lon) => {
         setModalText("Generating route");
 
-        const query = convertToQuery(options,lat,lon);
-        
+        const query = convertToQuery(options, lat, lon);
+
         // modal is active during graph generation
         setModal(true);
 
         const response = await axios
             .get(query)
-            .catch( (error) => handleError(error) );
+            .catch((error) => handleError(error));
 
         // update modal text
         setModal(false);
@@ -45,16 +45,17 @@ const ApiProvider = ({ children }) => {
                 routeCoords: parseCoords(response.data.pathNodes),
                 routeName: response.data.startingWay,
                 routeDistance: response.data.distance,
-                routeGradient: response.data.averageGradient };
+                routeGradient: response.data.averageGradient
+            };
         };
     };
 
     // parse JSON response from server to retrieve the route
     // coordinates
     const parseCoords = (pathNodesArray) => {
-        const coords = pathNodesArray.map( el => Object.keys(el)
-        .filter( key => key !== "id") // remove the ids
-        .map( key => el[key] )); // map to lat/lon values
+        const coords = pathNodesArray.map(el => Object.keys(el)
+            .filter(key => key !== "id") // remove the ids
+            .map(key => el[key])); // map to lat/lon values
 
         return coords;
     }
@@ -68,7 +69,7 @@ const ApiProvider = ({ children }) => {
         }
         setModalText(`Error: ${errorMessage}`);
         // keep modal on screen for two seconds
-        return new Promise( resolve => setTimeout(resolve, 2000));
+        return new Promise(resolve => setTimeout(resolve, 2000));
     }
 
     // take the user-specified options and return a string
@@ -76,18 +77,18 @@ const ApiProvider = ({ children }) => {
     const convertToQuery = (options, lat, lon) => {
         const avoidedFeaturesBools = Object.values(options.avoidedFeatures)
         const preferredFeaturesBools = Object.values(options.preferredFeatures)
-        const seperator = avoidedFeaturesBools.length === 0? "": "," 
+        const seperator = avoidedFeaturesBools.length === 0 ? "" : ","
         const head = "/route/args?";
 
         // convert KM to metres
         const distanceToMetres = options.distance * 1000;
         // convert to fraction
-        const maxGradient = options.maxGradient/100;
+        const maxGradient = options.maxGradient / 100;
 
         const query = domain + head
-        + `lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}&`
-        + `distance=${distanceToMetres}&maxGradient=${maxGradient}&`
-        + `options=${avoidedFeaturesBools + seperator + preferredFeaturesBools}`
+            + `lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}&`
+            + `distance=${distanceToMetres}&maxGradient=${maxGradient}&`
+            + `options=${avoidedFeaturesBools + seperator + preferredFeaturesBools}`
 
         return query;
     }
@@ -97,8 +98,8 @@ const ApiProvider = ({ children }) => {
             <Modal active={modalActive} text={modalText}>
             </Modal>
             <ApiContext.Provider value={{ sendCoords, sendRequest }}>
-                { children }
-            </ ApiContext.Provider> 
+                {children}
+            </ ApiContext.Provider>
         </div>
     );
 };

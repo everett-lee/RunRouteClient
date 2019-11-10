@@ -1,11 +1,11 @@
 import React from 'react';
 import { Segment } from 'semantic-ui-react';
 
-const SidebarSection = (props) => {
-    return <Segment content={props.name}
-    id="sidebarSegment"
-    textAlign={ "center" }
-    onClick={ () => 
-        props.reloadOldRoute(props.routeCoords, props.name, props.distance, props.gradient) }/>
+const SidebarSection = ({ name, routeCoords, distance, gradient, reloadOldRoute }) => {
+    return <Segment content={name}
+        id="sidebarSegment"
+        textAlign={"center"}
+        onClick={() =>
+            reloadOldRoute(routeCoords, name, distance, gradient)} />
 };
 export default SidebarSection;

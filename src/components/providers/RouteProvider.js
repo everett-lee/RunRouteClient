@@ -7,15 +7,16 @@ const RouteProvider = ({ children }) => {
         routeCoords: null,
         routeName: null,
         routeDistance: null,
-        routeGradient: null };
+        routeGradient: null
+    };
 
     const [routeObject, setRouteObject] = useState(initialState);
-    
+
     return (
         <RouteContext.Provider value={{ routeObject, setRouteObject }}>
-             { children }
-        </ RouteContext.Provider> 
-        );
+            {children}
+        </ RouteContext.Provider>
+    );
 };
 
 export { RouteContext, RouteProvider };

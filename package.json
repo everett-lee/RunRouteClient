@@ -1,7 +1,7 @@
 {
-  "homepage": "http://everett-lee.github.io/RunRouteClientGHPages",
   "name": "client",
   "version": "0.1.0",
+  "homepage": "https://everett-lee.github.io/RunRouteClient",
   "private": true,
   "dependencies": {
     "@testing-library/react": "^9.3.2",
@@ -20,11 +20,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"

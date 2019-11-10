@@ -8,24 +8,29 @@ import { Segment } from 'semantic-ui-react';
 class Options extends React.Component {
     constructor(props) {
         super(props);
-        
+
         const avoidedFeaturesObject =
-         {majorRoads: false, 
-          steps: false,
-          concrete: false,
-          unlit: false};
+        {
+            majorRoads: false,
+            steps: false,
+            concrete: false,
+            unlit: false
+        };
 
         const preferredFeaturesObject =
-         { uphill: false, 
-           residential: false, 
-           backroads: false, 
-           grassOrDirt: false,
-           };
+        {
+            uphill: false,
+            residential: false,
+            backroads: false,
+            grassOrDirt: false,
+        };
 
-        this.state = { distance: null,
-                       maxGradient: 15,
-                       avoidedFeatures: avoidedFeaturesObject,
-                       preferredFeatures: preferredFeaturesObject};
+        this.state = {
+            distance: null,
+            maxGradient: 15,
+            avoidedFeatures: avoidedFeaturesObject,
+            preferredFeatures: preferredFeaturesObject
+        };
     }
 
     // update distance on input
@@ -34,48 +39,48 @@ class Options extends React.Component {
     }
 
     // update max gradient on change to slider value
-    onSliderInputChange = (event)=> {
+    onSliderInputChange = (event) => {
         this.setState({ maxGradient: event.target.value });
     }
 
     // handles clicks for checkbox options
-    onAvoidedFeaturesButtonInputChange = (option) =>  {
+    onAvoidedFeaturesButtonInputChange = (option) => {
         const currentBool = this.state.avoidedFeatures[option];
         const avoidedFeaturesObject = this.state.avoidedFeatures;
-        
+
         // negate the current value when the checkbox is clicked
         avoidedFeaturesObject[option] = !currentBool;
 
-        this.setState({avoidedFeatures: avoidedFeaturesObject});
+        this.setState({ avoidedFeatures: avoidedFeaturesObject });
     }
 
     // handles clicks for checkbox options
-    onPreferredFeaturesButtonInputChange = (option) =>  {
+    onPreferredFeaturesButtonInputChange = (option) => {
         const currentBool = this.state.preferredFeatures[option];
         const preferredFeaturesObject = this.state.preferredFeatures;
-        
+
         // negate the current value when the checkbox is clicked
         preferredFeaturesObject[option] = !currentBool;
 
-        this.setState({preferredFeatures: preferredFeaturesObject});
+        this.setState({ preferredFeatures: preferredFeaturesObject });
     }
 
-    render (props) {
+    render(props) {
         return (
             <Segment>
-                <MainFormTop 
-                    onSliderInputChange={ this.onSliderInputChange }
-                    onDistanceInput={ this.onDistanceInput }
-                    maxGradient={ this.state.maxGradient }
+                <MainFormTop
+                    onSliderInputChange={this.onSliderInputChange}
+                    onDistanceInput={this.onDistanceInput}
+                    maxGradient={this.state.maxGradient}
                 />
                 <MainFormMid
-                    onAvoidedFeaturesButtonInputChange={ this.onAvoidedFeaturesButtonInputChange }
-                    onPreferredFeaturesButtonInputChange={ this.onPreferredFeaturesButtonInputChange }
+                    onAvoidedFeaturesButtonInputChange={this.onAvoidedFeaturesButtonInputChange}
+                    onPreferredFeaturesButtonInputChange={this.onPreferredFeaturesButtonInputChange}
                 />
-                <button onClick={ () => this.props.makeRequest(this.state) } className="ui button">
+                <button onClick={() => this.props.makeRequest(this.state)} className="ui button">
                     Find route
                 </button>
-                <button onClick={ () => this.props.resetMap() } className="ui button">
+                <button onClick={() => this.props.resetMap()} className="ui button">
                     Save route
                 </button>
             </Segment>
